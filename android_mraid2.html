@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <script src="https://unpkg.com/vconsole@latest/dist/vconsole.min.js"></script>
+  <script src="mraid2.js"></script>
+  <style>
+    html,
+    body {
+      background-color: transparent;
+    }
+
+    #app {
+      position: absolute;
+      padding-top: constant(safe-area-inset-top);
+      padding-top: env(safe-area-inset-top);
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+    }
+
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: flex-start;
+      align-content: flex-start;
+      padding-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="row">
+      <button onclick="mClose()">mraid.close</button>
+      <button onclick="mUnload()">mraid.unload</button>
+      <button onclick="getVersion()">mraid.getVersion</button>
+      <button onclick="getOs()">mraid.getOs</button>
+      <button onclick="isViewable()">mraid.isViewable</button>
+      <button onclick="screenSize()">mraid.screenSize</button>
+      <button onclick="getCurrentAppOrientation()">mraid.getCurrentAppOrientation</button>
+      <button onclick="useScrollView()">mraid.useScrollView</button>
+      <button onclick="dispatchAfter()">mraid.dispatchAfter</button>
+      <button onclick="useCustomClose()">mraid.useCustomClose</button>
+      <button onclick="marguments()">mraid.arguments</button>
+      <button onclick="getBidResponse()">mraid.bidResponse</button>
+      <button onclick="reward()">mraid.reward</button>
+      <button onclick="addMacro()">mraid.addMacro</button>
+      <button onclick="getMacro()">mraid.getMacro</button>
+      <button onclick="removeMacro()">mraid.removeMacro</button>
+      <button onclick="clearMacro()">mraid.clearMacro</button>
+      <button onclick="addDclog()">mraid.addDclog</button>
+      <button onclick="addDclogBindAd()">mraid.addDclogBindAd</button>
+      <button onclick="tracking()">mraid.tracking</button>
+      <button onclick="loadAd()">mraid.loadAd</button>
+      <button onclick="device()">mraid.device</button>
+      <button onclick="animation()">mraid.animation</button>
+      <button onclick="setCurPlayAd()">mraid.setCurPlayAd</button>
+
+    </div>
+    <div class="row">
+      <button onclick="openStorekit()">点击下载类</button>
+      <button onclick="openInWebView()">打开外部浏览器</button>
+      <button onclick="openWebViewInApp()">打开内部浏览器</button>
+      <button onclick="openDeeplinkSuccess()">打开DeepLink</button>
+      <button onclick="openMarketSuccess()">打开Market</button>
+      <button onclick="addDownloadStateChanged()">add下载监听</button>
+      <button onclick="getApKDownloadProcess()">获取下载进度</button>
+    </div>
+    <div class="row">
+      <button onclick="sk_loadProduct()">storekit.loadProduct</button>
+      <button onclick="sk_dismiss()">storekit.dismiss</button>
+      <button onclick="sk_addlistener()">storekit.addEventListener</button>
+      <button onclick="sk_removeListener()">storekit.removeEventListener</button>
+    </div>
+
+    <div class="row">
+      <button onclick="ov_dismiss()">overlay.dismiss</button>
+      <button onclick="ov_addlistener()">overlay.addEventListener</button>
+      <button onclick="ov_removeListener()">overlay.removeEventListener</button>
+    </div>
+
+    <div class="row">
+      <button onclick="sessionStorageSetItem()">sessionStorage.setItem</button>
+      <button onclick="sessionStorageGetItem()">sessionStorage.getItem</button>
+      <button onclick="sessionStorageRemoveItem()">sessionStorage.removeItem</button>
+      <button onclick="sessionStorageClear()">sessionStorage.clear</button>
+      <button onclick="sessionStorageLength()">sessionStorage.length</button>
+      <button onclick="sessionStorageListener()">sessionStorage.onStorageChange</button>
+    </div>
+
+    <div class="row">
+      <button onclick="localStorageSetItem()">localStorage.setItem</button>
+      <button onclick="localStorageGetItem()">localStorage.getItem</button>
+      <button onclick="localStorageRemoveItem()">localStorage.removeItem</button>
+      <button onclick="localStorageClear()">localStorage.clear</button>
+      <button onclick="localStorageLength()">localStorage.length</button>
+      <button onclick="localStorageListener()">localStorage.onStorageChange</button>
+    </div>
+
+    <div class="row">
+      <button onclick="timerInit()">timer.init</button>
+      <button onclick="timerFire()">timer.fire</button>
+      <button onclick="timerPause()">timer.pause</button>
+      <button onclick="timerResume()">timer.resume</button>
+      <button onclick="timerInvalidate()">timer.invalidate</button>
+    </div>
+
+    <div class="row">
+      <button onclick="vpaidInit()">vpaid.init</button>
+      <button onclick="vpaidAssetURL()">vpaid.assetURL</button>
+      <button onclick="vpaidPlay()">vpaid.play</button>
+      <button onclick="vpaidReplay()">vpaid.replay</button>
+      <button onclick="vpaidPause()">vpaid.pause</button>
+      <button onclick="vpaidStop()">vpaid.stop</button>
+      <button onclick="vpaidSeek()">vpaid.seek</button>
+      <button onclick="vpaidFrame()">vpaid.frame</button>
+      <button onclick="vpaidMuted(false)">vpaid.muted</button>
+      <button onclick="vAddEventListener(true)">vpaid.addEventListener</button>
+      <button onclick="vRemoveEventListener(true)">vpaid.removeEventListener</button>
+      <button onclick="changeVideo()">vpaid更改资源</button>
+    </div>
+
+    <div class="row">
+      <button onclick="webViewInit()">webView.init</button>
+      <button onclick="webViewFrame()">webView.frame</button>
+      <button onclick="webViewLoadURL()">webView.loadURL</button>
+      <button onclick="loadURLByPackage()">webView.loadURLByPackage</button>
+      <button onclick="webViewLoadHTMLString()">webView.loadHTMLSting</button>
+      <button onclick="webViewLoadId()">webView.loadId</button>
+      <button onclick="webViewStopLoading()">webView.stoploading</button>
+      <button onclick="webViewReload()">webView.reload</button>
+      <button onclick="webViewShow()">webView.show</button>
+      <button onclick="wAddEventListener()">webView.addEventListener</button>
+      <button onclick="wRemoveEventListener()">webView.removeEventListener</button>
+
+    </div>
+  </div>
+  <script>
+    document.body.style.backgroundColor = 'rgba(255,255,255,0)';
+    var vConsole = new VConsole();
+    var bridge = {
+      startX: undefined,
+      startY: undefined,
+      endX: undefined,
+      endY: undefined,
+    }
+    new Vue({
+      el: '#app',
+      data: function () {
+        return {
+          visible: false
+        }
+      }
+    });
+  </script>
+
+  <script>/*手指放在屏幕上*/
+    function addTouchEvent() {
+      document.addEventListener("touchstart", function (e) {
+        let touch = e.touches[0];
+        bridge.startX = touch.pageX;
+        bridge.startY = touch.pageY;
+        bridge.endX = touch.pageX;
+        bridge.endY = touch.pageY;
+        mraid.touchStart(bridge.startX, bridge.startY)
+        console.log('touchStart -- x = ' + bridge.startX + ', y = ' + bridge.startY);
+      }.bind(this), false);
+
+      document.addEventListener("touchmove", function (e) {
+        let touch = e.touches[0];
+        bridge.endX = touch.pageX
+        bridge.endY = touch.pageY
+        mraid.touchMove(touch.pageX, touch.pageY)
+        console.log('touchMove -- x = ' + touch.pageX + ', y = ' + touch.pageY);
+      }.bind(this), false);
+
+      document.addEventListener("touchend",
+        function (e) {
+          console.log('touchEnd -- x = ' + bridge.endX + ', y = ' + bridge.endY);
+          mraid.touchEnd(bridge.endX, bridge.endY)
+        }.bind(this), false);
+    }
+  </script>
+
+  <script>
+    mraid.addEventListener('ready', function () {
+      console.log('html - handleReadyEvent');
+    });
+    mraid.addEventListener('viewableChange', function (val) {
+      console.log('html - viewableChange -- ' + val);
+      if (!bridge.vpaid) return;
+      if (!val) {
+        bridge.vpaid.pause();
+      } else {
+        bridge.vpaid.play();
+      }
+    });
+    mraid.addEventListener('pageChanged', function (val) {
+      console.log('html - pageChanged -- ');
+      console.log(val)
+    })
+  </script>
+
+  <script>
+
+    function getApKDownloadProcess() {
+      const bidResponse = mraid.bidResponse();
+      const vid = bidResponse.ads[0].vid
+      var process = mraid.android.getApKDownloadProcess('vid')
+      console.log('-----------------getApKDownloadProcess---------------' + process)
+    }
+
+    function addDownloadStateChanged() {
+      mraid.android.addEventListener('downloadStateChanged', 'vid', function (val) {
+        console.log('html - downloadStateChanged -- ');
+        console.log(val)
+        var process = mraid.android.getApKDownloadProcess('vid')
+        console.log('------process------' + process)
+      })
+    }
+
+    function openStorekit() {
+      let ad = mraid.bidResponse().ads[0]
+      let m = ad.materials[0]
+      mraid.open('https://imtt.dd.qq.com/sjy.10001/sjy.00004/16891/apk/DA2AAA5BD4E57FA3A897CA0CEE244B14.apk?fsname=me.yidui_7.5.600_837.apk&csr=3554', {
+        interaction_type: 2,
+      })
+    }
+    function openInWebView() {
+      let ad = mraid.bidResponse().ads[0]
+      let m = ad.materials[0]
+      mraid.open('https://www.baidu.com/', {
+        interaction_type: 1,
+        log_data: {
+          key: 'lance',
+          value: '123456789'
+        }
+      })
+    }
+    function openWebViewInApp() {
+      let ad = mraid.bidResponse().ads[0]
+      let m = ad.materials[0]
+      mraid.open('https://www.baidu.com/', {
+        interaction_type: 1,
+        vid: ad.vid,
+        in_app: true
+      })
+    }
+    function openMarketSuccess() {
+      let ad = mraid.bidResponse().ads[0]
+      let m = ad.materials[0]
+      mraid.open(m.landingPage, {
+        interaction_type: 3,
+        market: {
+          market_url: 'vivomarket://details?th_id=48065&is_auto_down=true&third_st_param=%7B%22sign_v%22%3A%221.0%22%2C%22sign_type%22%3A%221%22%2C%22value%22%3A%22ADJfL0U3Z0nnx21uxvEIEe-zovJn6rgnEejzW9KlOMQ0Z0ZPTyJ2WyT9WMdfWMQC6eWu6euuZ9cfONkzovJn6rgfEejz6er2W2Ju6NQP6N-lWNK9WMHP6MrzWedCZ9kDWMh26eHzovJn6rgDEejzTMZCTNK4OMHfONTCTu79Z9ZPWe8eZMheZ9Z4ONQmZ5E9T0E0W9K06ykfZeKf6zEsE2_9cyuHEejzTqEsE2rHR04zOzElWNc1TN6e6e-fZ2Z4Z9TCONQCTNh2T0h2O5heW9QmWqEsEX8V6DEIE2Wwxq19cD1nx2_Dx0uHo2rDUyuexykYx2hlcDJg%22%2C%22th_st_app_id%22%3A%221000%22%7D&third_param=%7B%22encrypt_param%22%3A%7B%22channel_ticket%22%3A%22tt-g5akx55kv82Aa9o0HFXRF_f1eQl2z87Mi7ehvj3RGhqAMflj76GsMxs3DQFNSxdiq3_uEo-10scHoHSuZMUbTwoIXJCNGZBx1nVvjtiE5xXJvS9SzEtkJu6CSpQbtHZzE-gAf4hf9tu2uXn3pWQ%22%2C%22ext_info%22%3A%22%7B%5C%22uid%5C%22%3A%5C%22ce4153656a9e0a4d1a474c49e2be52de%5C%22%2C%5C%22site%5C%22%3A%5C%221785908803%5C%22%2C%5C%22ad_r%5C%22%3A%5C%221650449908352_3c6160ca5cc64808ab33b6746de0b40f%5C%22%2C%5C%22third_caller%5C%22%3A%5C%22cn.youth.news%5C%22%7D%22%2C%22id%22%3A%2248065%22%2C%22nonce_str%22%3A%22a67aa3ec11784d8db5cfd9948e2b703e%22%2C%22screen_type%22%3A%222%22%2C%22sign%22%3A%223F8B9C93BB98F9F48EB48D84B8B751E7%22%2C%22third_appid%22%3A%221257c05840c67d96%22%2C%22time_end%22%3A%221650457108568%22%2C%22time_start%22%3A%221650449908568%22%7D%7D&id=com.ss.android.article.news&th_name=ads_api',
+          app_package_name: 'com.ss.android.article.news',
+          appstore_package_name: 'com.bbk.appstore'
+        }
+      })
+    }
+    function openDeeplinkSuccess() {
+      let ad = mraid.bidResponse().ads[0]
+      let m = ad.materials[0]
+      mraid.open('vipshop://showWebview?url=https%3A%2F%2Fmst.vip.com%2FBsroTDFJ9JRhzEDOf0AkCw.php%3Fwq%3D1%26wapid%3Dmst_100051126%26_src%3Dmst%26extra_banner%3D115051126%26nova%3D1%26nova_platform%3D1%26mst_page_type%3Dguide&tra_from=tra%3AC01V4mmckle4k6t0%3A8e2sexql%3Amig_code%3A189736e7fc68a230cf9b547b7b5b2d8f%3Aac014mmckl0000cf859oixerx1jg5r6z&f=dx', {
+        interaction_type: 1,
+        'default_url': 'https://www.sigmob.com'
+      }, {
+        onSuccess: function () {
+          console.log('html --  openSuccess')
+        },
+        onFailed: function (message) {
+          console.log('html --  openFailed -- ' + message)
+        },
+      })
+    }
+  </script>
+
+  <!-- mraid -->
+  <script>
+    function mClose() {
+      mraid.close()
+    }
+    function mUnload() {
+      mraid.unload()
+    }
+    function getVersion() {
+      console.log(mraid.getVersion())
+    }
+    function getOs() {
+      console.log(mraid.getOs());
+    }
+    function isViewable() {
+      console.log(mraid.isViewable())
+    }
+    function getState() {
+      console.log(mraid.getState());
+    }
+    function screenSize() {
+      console.log(mraid.getScreenSize())
+    }
+    function getCurrentAppOrientation() {
+      console.log(mraid.getCurrentAppOrientation())
+    }
+    function useScrollView() {
+      mraid.useScrollView(1)
+      addTouchEvent()
+    }
+    function dispatchAfter() {
+      mraid.dispatchAfter(3000,
+        function () {
+          console.log('excute dispatchAfter...')
+        })
+    }
+    function useCustomClose() {
+      mraid.useCustomClose(false)
+    }
+    function marguments() {
+      console.log(mraid.arguments())
+    }
+    function getBidResponse() {
+      console.log(mraid.bidResponse())
+    }
+    function reward() {
+      mraid.reward()
+    }
+    function addMacro() {
+      const bidResponse = mraid.bidResponse();
+      const vid = bidResponse.ads[0].vid
+      mraid.addMacro('_NAME_', 'codi', vid)
+    }
+    function getMacro() {
+      const bidResponse = mraid.bidResponse();
+      const vid = bidResponse.ads[0].vid
+      const value = mraid.getMacro('_NAME_', vid)
+      console.log(typeof (value))
+      console.log(value)
+    }
+    function removeMacro() {
+      const bidResponse = mraid.bidResponse();
+      const vid = bidResponse.ads[0].vid
+      mraid.removeMacro('_NAME_', vid)
+    }
+    function clearMacro() {
+      mraid.clearMacro()
+    }
+    function addDclog() {
+      var reslute = mraid.addDclog({
+        'category': 'js_test',
+        '_ac_type': 666,
+        'name': 'codi',
+        'source': 'js'
+      })
+      console.log(reslute)
+    }
+    function addDclogBindAd() {
+      const ad = mraid.bidResponse().ads[0]
+      var reslute = mraid.addDclog({
+        'category': 'js_test',
+        '_ac_type': 666,
+        'name': 'codi',
+        'source': 'js'
+      }, ad.vid)
+      console.log(reslute)
+    }
+    function tracking() {
+      mraid.addMacro('_NAME_', 'codi3')
+      mraid.tracking(['https://www.baidu.com?name=_NAME_'], 'test_event', {
+        inQueue: true, statistic: true, retry: 3
+      })
+      mraid.removeMacro('_NAME_')
+    }
+    function loadAd() {
+      mraid.loadAd({ t1: 'key1', t2: 'key2' }, function (res) {
+        console.log(res);
+      })
+    }
+    function device() {
+      var device = mraid.device()
+      console.log(device)
+    }
+
+    function animation() {
+      let screenSize = mraid.getScreenSize()
+      const to = { x: 0, y: 100, w: screenSize.width, h: 200 }
+      mraid.animation(0.5, bridge.webView, bridge.webView.rect, to, function () {
+        console.log('animation completion...')
+      })
+    }
+
+    function setCurPlayAd() {
+      const bidResponse = mraid.bidResponse();
+      const vid = bidResponse.ads[0].vid
+      mraid.setCurPlayAd(vid);
+    }
+
+
+  </script>
+
+  <!-- storekit -->
+  <script>
+    function sk_loadProduct() {
+      const ad = mraid.bidResponse().ads[0]
+      mraid.iOS.storekit.loadProduct('1597863714', {
+        timeout: 3,
+        vid: ad.vid
+      })
+    }
+    function sk_dismiss() {
+      mraid.iOS.storekit.dismiss()
+    }
+    function sk_addlistener() {
+      mraid.iOS.storekit.addEventListener('ready', function (id) {
+        console.log('html - storekit -- ready -- ' + id);
+      })
+      mraid.iOS.storekit.addEventListener('present', function (id) {
+        console.log('html - storekit -- present -- ' + id);
+      })
+      mraid.iOS.storekit.addEventListener('dismiss', function (id) {
+        console.log('html - storekit -- dismiss -- ' + id);
+      })
+      mraid.iOS.storekit.addEventListener('error', function (id, message) {
+        console.log('html - storekit -- error -- ' + id + ' -- ' + message);
+      })
+    }
+    function sk_removeListener() {
+      mraid.iOS.storekit.removeEventListener('ready')
+      mraid.iOS.storekit.removeEventListener('error')
+      mraid.iOS.storekit.removeEventListener('present')
+      mraid.iOS.storekit.removeEventListener('dismiss')
+    }
+  </script>
+
+  <!-- overlay -->
+  <script>
+    function ov_dismiss() {
+      mraid.iOS.overlay.dismiss()
+    }
+    function ov_addlistener() {
+      mraid.iOS.overlay.addEventListener('ready', function (id) {
+        console.log('html - storekit -- ready -- ' + id);
+      })
+      mraid.iOS.overlay.addEventListener('error', function (id, message) {
+        console.log('html - storekit -- error -- ' + id + ' -- ' + message);
+      })
+      mraid.iOS.overlay.addEventListener('present', function (id) {
+        console.log('html - storekit -- present -- ' + id);
+      })
+      mraid.iOS.overlay.addEventListener('dismiss', function (id) {
+        console.log('html - storekit -- dismiss -- ' + id);
+      })
+    }
+    function ov_removeListener() {
+      mraid.iOS.overlay.removeEventListener('ready')
+      mraid.iOS.overlay.removeEventListener('error')
+      mraid.iOS.overlay.removeEventListener('present')
+      mraid.iOS.overlay.removeEventListener('dismiss')
+    }
+  </script>
+
+  <!-- sessionStorage -->
+  <script>
+    function sessionStorageSetItem() {
+      mraid.sessionStorage.setItem('name', 'codi');
+      mraid.sessionStorage.setItem('age', '30');
+      mraid.sessionStorage.setItem('addr', '维亚大厦');
+
+    }
+    function sessionStorageGetItem() {
+      let value = mraid.sessionStorage.getItem('name');
+      console.log(value);
+    }
+    function sessionStorageRemoveItem() {
+      mraid.sessionStorage.removeItem('name');
+    }
+    function sessionStorageClear() {
+      mraid.sessionStorage.clear();
+    }
+    function sessionStorageLength() {
+      const length = mraid.sessionStorage.length();
+      console.log('sessionStorage.length = ' + length);
+    }
+    function sessionStorageListener() {
+      mraid.sessionStorage.addEventListener('name',
+        function (event) {
+          console.log('1-- ' + JSON.stringify(event))
+        })
+      mraid.sessionStorage.addEventListener('name',
+        function (event) {
+          console.log('2-- ' + JSON.stringify(event))
+        })
+    }
+  </script>
+
+  <!-- localStorage -->
+  <script>
+    function localStorageSetItem() {
+      mraid.localStorage.setItem('name', 'codi');
+      mraid.localStorage.setItem('age', '30');
+      mraid.localStorage.setItem('addr', '维亚大厦');
+    }
+    function localStorageGetItem() {
+      let value = mraid.localStorage.getItem('name');
+      console.log(value);
+    }
+    function localStorageRemoveItem() {
+      mraid.localStorage.removeItem('name');
+    }
+    function localStorageClear() {
+      mraid.localStorage.clear();
+    }
+    function localStorageLength() {
+      const length = mraid.localStorage.length();
+      console.log('localStorage.length = ' + length);
+    }
+    function localStorageListener() {
+      mraid.localStorage.addEventListener('name',
+        function (event) {
+          console.log(event)
+        })
+    }
+  </script>
+
+  <!-- timer -->
+  <script>
+    function timerInit() {
+      bridge.timer = new mraid.Timer(3000, true,
+        function () {
+          console.log('timer -- fire')
+        });
+    }
+    function timerFire() {
+      bridge.timer.fire();
+    }
+    function timerPause() {
+      bridge.timer.pause();
+    }
+    function timerResume() {
+      bridge.timer.resume();
+    }
+    function timerInvalidate() {
+      bridge.timer.invalidate();
+    }
+  </script>
+
+  <!-- vpaid -->
+  <script>
+    function vpaidInit() {
+      let size = mraid.getScreenSize();
+      if (!bridge.vpaid) {
+        bridge.vpaid = new mraid.Vpaid();
+        bridge.vpaid.frame(0, 0, size.width, size.height);
+        mraid.belowSubview(bridge.vpaid);
+      }
+      // if (!bridge.vpaid2) {
+      //   bridge.vpaid2 = new mraid.Vpaid();
+      //   bridge.vpaid2.frame(size.width, 0, size.width, size.height);
+      //   mraid.belowSubview(bridge.vpaid2);
+      // }
+    }
+    function vpaidAssetURL() {
+      // let ad = mraid.bidResponse().ads[0]
+      // let m = ad.materials[0]
+      // bridge.vpaid.assetURL(m.videoUrl)
+      bridge.vpaid.assetURL('https://testn.sigmob.cn/mtsvideo/f7693d17afbe4b8eaf4dad33bc2668a2/vertical/8a9e32c63157cdd2b9b9cec04c497c9a.mp4');
+      // bridge.vpaid2.assetURL('https://download.ydstatic.com/ead/200303tanwan28sYC2j.mp4');
+    }
+    function vpaidPlay() {
+      bridge.vpaid.play();
+      // bridge.vpaid2.play();
+    }
+    function vpaidReplay() {
+      bridge.vpaid.replay();
+    }
+    function vpaidPause() {
+      bridge.vpaid.pause();
+    }
+    function vpaidStop() {
+      bridge.vpaid.stop();
+    }
+    function vpaidSeek() {
+      bridge.vpaid.seek(10);
+    }
+    function vpaidFrame() {
+      bridge.vpaid.frame(0, 0, 390, 300);
+    }
+    function vpaidMuted(flag) {
+      bridge.vpaid.muted(flag);
+    }
+    function vAddEventListener() {
+      bridge.vpaid.addEventListener('ready', function (val) {
+        console.log('vpaid -- readyToPlay - ' + val.duration);
+      });
+      bridge.vpaid.addEventListener('playStateChanged', function (val) {
+        console.log('vpaid -- playStateChanged - ' + val.state);
+      });
+      bridge.vpaid.addEventListener('loadStateChanged', function (val) {
+        console.log('vpaid -- loadStateChanged - ' + val.state);
+      });
+      bridge.vpaid.addEventListener('currentTime', function (val) {
+        console.log('vpaid -- currentTime - ' + val.currentTime + ', duration = ' + val.duration);
+      });
+      bridge.vpaid.addEventListener('playEnd', function (val) {
+        console.log('vpaid -- playEnd - ' + val);
+      });
+      bridge.vpaid.addEventListener('error', function (val) {
+        console.log('vpaid -- playError - ' + val.error);
+      });
+    }
+    function vRemoveEventListener() {
+      bridge.vpaid.removeEventListener('ready')
+      bridge.vpaid.removeEventListener('playStateChanged')
+      bridge.vpaid.removeEventListener('loadStateChanged')
+      bridge.vpaid.removeEventListener('currentTime')
+      bridge.vpaid.removeEventListener('playEnd')
+      bridge.vpaid.removeEventListener('error')
+    }
+    function changeVideo() {
+      let videoUrl = 'https://download.ydstatic.com/ead/200303tanwan28sYC2j.mp4'
+      bridge.vpaid.assetURL(videoUrl)
+      bridge.vpaid.play()
+    }
+  </script>
+
+  <!-- WebView -->
+  <script>
+    function webViewInit() {
+      bridge.webView = new mraid.WebView('name', {
+        name: 'codi'
+      });
+
+      let screenSize = mraid.getScreenSize()
+      bridge.webView.frame(0, 200, screenSize.width, 400)
+      bridge.webView.loadURL('https://www.baidu.com/')
+
+      mraid.belowSubview(bridge.webView);
+      // mraid.addSubview(bridge.webView);
+    }
+    function webViewFrame() {
+      let screenSize = mraid.getScreenSize()
+      bridge.webView.frame(0, 200, screenSize.width, 400)
+    }
+    function webViewLoadURL() {
+      bridge.webView.loadURL('https://www.baidu.com/')
+    }
+    function loadURLByPackage() {
+      bridge.webView.loadURLByPackage('http://39.105.1.99:8080/file/downloadFile/mraid2_02.tar')
+    }
+    function webViewLoadHTMLString() {
+      const path = '/Users/happyelements/sigmob_code/gitlab/wind-sdk-ios/demo-ios/Classes/Resource/mraid/mraid2/mraid2.html'
+      bridge.webView.loadHTMLString(path)
+    }
+    function webViewLoadId() {
+      let ad = mraid.bidResponse().ads[0]
+      bridge.webView.loadById(ad.materials[0].htmlSnippet)
+    }
+    function webViewStopLoading() {
+      bridge.webView.stopLoading()
+    }
+    function webViewReload() {
+      bridge.webView.reload()
+    }
+    function webViewShow() {
+      mraid.addSubview(bridge.webView)
+    }
+    function wAddEventListener() {
+      bridge.webView.addEventListener('ready', function () {
+        console.log('webView -- ready');
+      });
+      bridge.webView.addEventListener('error', function (error) {
+        console.log('webView -- error - ' + error.code + ' -- ' + error.message);
+      });
+    }
+    function wRemoveEventListener() {
+      bridge.webView.removeEventListener('ready')
+      bridge.webView.removeEventListener('error')
+    }
+  </script>
+</body>
+
+</html>
